@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "511117585585",
+    "firebase_url": "https://redleon-test.firebaseio.com",
+    "project_id": "redleon-test",
+    "storage_bucket": "redleon-test.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:511117585585:android:56a9f6e69abadf9b2b4690",
+        "android_client_info": {
+          "package_name": "com.redleonlogin"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "511117585585-rtqjlers4u6efk952s06fbqtvlnccinc.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.redleonlogin",
+            "certificate_hash": "7d62b4e8ef5c06dc8cf96dc2333f3b69c87624ab"
+          }
+        },
+        {
+          "client_id": "511117585585-2pg11pogeflefoogh0o8nu4mru3kfris.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD9cBPaZ3FNDw4GiQAYz5tm7v4ZRbqPUdU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "511117585585-2pg11pogeflefoogh0o8nu4mru3kfris.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
