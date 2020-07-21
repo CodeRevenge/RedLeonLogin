@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {View, TextInput, Text, Button, StyleSheet} from 'react-native';
+import {View, TextInput, Text, Button, StyleSheet, Alert} from 'react-native';
 
 import auth from '@react-native-firebase/auth';
 import {GoogleSignin} from '@react-native-community/google-signin';
@@ -13,15 +13,24 @@ export default () => {
   const [user, setUser] = useState('');
   const [password, setPassword] = useState('');
 
+  const [emailForm, setEmailForm] = useState(false);
+
   const login = () => {
     auth()
       .createUserWithEmailAndPassword(user, password)
-      .then(() => {
+      .then(_user => {
+        console.log(_user);
         console.log('User account created & signed in!');
       })
       .catch(error => {
         if (error.code === 'auth/email-already-in-use') {
+          Alert.alert(
+            'Email en uso',
+            'El email que suministraste ya esta en uso',
+            [{text: 'OK'}],
+          );
           console.log('That email address is already in use!');
+          return;
         }
 
         if (error.code === 'auth/invalid-email') {
@@ -32,10 +41,8 @@ export default () => {
       });
   };
 
-  const logout = () => {
-    auth()
-      .signOut()
-      .then(() => console.log('User signed out!'));
+  const loginWithEmail = () => {
+    setEmailForm(true);
   };
 
   const onGoogleButtonPress = async () => {
@@ -53,22 +60,30 @@ export default () => {
     return auth().signInWithCredential(googleCredential);
   };
 
+  const emailFormJSX = () => {
+    return (
+      <View>
+        <Text>Email</Text>
+        <TextInput
+          placeholder={'Email'}
+          keyboardType={'email-address'}
+          onChangeText={text => setUser(text)}
+        />
+        <Text>Password</Text>
+        <TextInput
+          placeholder={'Password'}
+          secureTextEntry={true}
+          onChangeText={text => setPassword(text)}
+        />
+      </View>
+    );
+  };
+
   return (
     <View style={styles.credentialBox}>
-      <Text>Email</Text>
-      <TextInput
-        placeholder={'Email'}
-        keyboardType={'email-address'}
-        onChangeText={text => setUser(text)}
-      />
-      <Text>Password</Text>
-      <TextInput
-        placeholder={'Password'}
-        secureTextEntry={true}
-        onChangeText={text => setPassword(text)}
-      />
-      <Button title={'Loggin'} onPress={login} />
-      <Button title={'Singin'} onPress={logout} />
+      {emailForm ? emailFormJSX() : <></>}
+
+      <Button title={'Loggin With Email'} onPress={loginWithEmail} />
       <Button
         title="Google Sign-In"
         onPress={() =>
@@ -84,5 +99,8 @@ export default () => {
 const styles = StyleSheet.create({
   credentialBox: {
     alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: 'blue',
+    flexGrow: 1,
   },
 });

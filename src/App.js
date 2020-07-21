@@ -8,13 +8,26 @@ import Main from './Main';
 import {SafeAreaView, StyleSheet, StatusBar} from 'react-native';
 
 const App: () => React$Node = () => {
+  const [initializing, setInitializing] = useState(false);
+  const [user, setUser] = useState(null);
+
+  // Handle user state changes
+  const onAuthStateChanged = user => {
+    setUser(user);
+    if (initializing) setInitializing(false);
+  };
+
+  useEffect(() => {
+    const subscriber = auth().onAuthStateChanged(onAuthStateChanged);
+    return subscriber; // unsubscribe on unmount
+  }, []);
+
+  if (initializing) return null;
+
   return (
     <>
       <StatusBar barStyle="dark-content" />
-      <SafeAreaView>
-        <Login />
-        <Main user={{name: 'James'}} />
-      </SafeAreaView>
+      <SafeAreaView>{user ? <Main user={user} /> : <Login />}</SafeAreaView>
     </>
   );
 };
